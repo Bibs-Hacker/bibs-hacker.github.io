@@ -1,0 +1,5426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#050505">
+
+<title>MERCYVERSE // BRUTAL EDITION</title>
+
+<style>
+
+/* =========================================================
+   MERCYVERSE // BRUTAL EDITION
+   A neo-brutalist love experience by Dev Brian
+   ONE FILE ONLY
+   ========================================================= */
+
+:root{
+    --black:#050505;
+    --black2:#0b0b0b;
+    --paper:#f4f0e8;
+    --paper2:#fffdf7;
+    --pink:#ff3b9d;
+    --pink2:#ff79bd;
+    --lime:#d9ff32;
+    --cyan:#5ee7ff;
+    --orange:#ff7139;
+    --purple:#9d5cff;
+    --white:#ffffff;
+    --gray:#b7b2aa;
+    --darkgray:#222;
+    --border:#050505;
+
+    --hard-shadow:8px 8px 0 var(--black);
+    --hard-shadow-big:14px 14px 0 var(--black);
+
+    --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    width:100%;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            rgba(0,0,0,.04) 1px,
+            transparent 1px
+        ),
+        var(--paper);
+
+    background-size:24px 24px;
+
+    color:var(--black);
+
+    font-family:
+        Arial Black,
+        Impact,
+        Inter,
+        system-ui,
+        sans-serif;
+}
+
+
+/* =========================================================
+   GLOBAL TEXT SELECTION
+   ========================================================= */
+
+::selection{
+    background:var(--pink);
+    color:#000;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar{
+    width:12px;
+}
+
+::-webkit-scrollbar-track{
+    background:var(--paper);
+    border-left:3px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--black);
+    border:2px solid var(--paper);
+}
+
+
+/* =========================================================
+   CRT / NOISE OVERLAY
+   ========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9998;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(0,0,0,.025) 0px,
+            rgba(0,0,0,.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    mix-blend-mode:multiply;
+}
+
+
+/* =========================================================
+   UNIVERSE BACKGROUND
+   ========================================================= */
+
+#universe{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+    background:#101010;
+}
+
+.grid-bg{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            rgba(255,255,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:42px 42px;
+}
+
+.color-block{
+    position:absolute;
+    width:35vw;
+    height:35vw;
+
+    border:7px solid #000;
+
+    animation:
+        brutalFloat 9s ease-in-out infinite
+        alternate;
+}
+
+.color-block.one{
+    background:var(--pink);
+    left:-12%;
+    top:-15%;
+    transform:rotate(-12deg);
+}
+
+.color-block.two{
+    background:var(--lime);
+    right:-12%;
+    bottom:-18%;
+    transform:rotate(15deg);
+    animation-delay:-3s;
+}
+
+.color-block.three{
+    background:var(--purple);
+    left:42%;
+    top:42%;
+    width:15vw;
+    height:15vw;
+    transform:rotate(25deg);
+    animation-delay:-6s;
+}
+
+@keyframes brutalFloat{
+    from{
+        transform:
+            translate(-15px,-10px)
+            rotate(-8deg);
+    }
+
+    to{
+        transform:
+            translate(25px,30px)
+            rotate(12deg);
+    }
+}
+
+#particles{
+    position:absolute;
+    inset:0;
+}
+
+.particle{
+    position:absolute;
+
+    width:5px;
+    height:5px;
+
+    background:var(--paper);
+
+    border:1px solid #000;
+
+    animation:
+        brutalParticle
+        linear infinite;
+}
+
+@keyframes brutalParticle{
+
+    0%{
+        transform:
+            translateY(110vh)
+            rotate(0deg);
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    85%{
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translateY(-20vh)
+            rotate(360deg);
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+#app{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:100svh;
+    z-index:2;
+}
+
+
+/* =========================================================
+   SPLASH SCREEN
+   ========================================================= */
+
+#splash{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink) 0%,
+            var(--pink) 30%,
+            var(--black) 30%,
+            var(--black) 100%
+        );
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease,
+        transform .8s var(--ease);
+}
+
+#splash.hide{
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-100%);
+}
+
+.splash-content{
+    width:min(92%,760px);
+    color:var(--paper);
+}
+
+.splash-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:35px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-weight:900;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.splash-sticker{
+    background:var(--lime);
+    color:#000;
+
+    border:4px solid #000;
+
+    padding:8px 12px;
+
+    box-shadow:6px 6px 0 #000;
+
+    transform:rotate(-2deg);
+}
+
+.splash-code{
+    color:#fff;
+    opacity:.65;
+}
+
+.mini-orbit{
+    width:130px;
+    height:130px;
+
+    position:relative;
+
+    margin-bottom:25px;
+
+    border:7px solid var(--paper);
+
+    background:var(--pink);
+
+    box-shadow:
+        12px 12px 0 var(--lime);
+
+    transform:rotate(-5deg);
+}
+
+.orbit-ring{
+    position:absolute;
+    inset:14px;
+
+    border:4px dashed #000;
+
+    animation:
+        spin 5s linear infinite;
+}
+
+.orbit-ring.two{
+    inset:27px;
+    border-style:solid;
+    animation-direction:reverse;
+}
+
+.orbit-ring::before{
+    content:"";
+
+    position:absolute;
+
+    width:14px;
+    height:14px;
+
+    background:var(--lime);
+
+    border:3px solid #000;
+
+    top:-10px;
+    left:50%;
+
+    transform:translateX(-50%);
+}
+
+.orbit-heart{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:48px;
+
+    color:#000;
+
+    animation:
+        brutalBeat 1.1s infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes brutalBeat{
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.25)
+                   rotate(-8deg);
+    }
+}
+
+.kicker{
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+
+    color:var(--lime);
+
+    margin-bottom:12px;
+}
+
+.splash-title{
+    font-family:
+        Arial Black,
+        Impact,
+        sans-serif;
+
+    font-size:
+        clamp(55px,13vw,125px);
+
+    line-height:.78;
+
+    letter-spacing:-7px;
+
+    text-transform:uppercase;
+
+    margin-bottom:25px;
+}
+
+.splash-title span{
+    display:block;
+}
+
+.splash-title span:last-child{
+    color:var(--pink);
+
+    -webkit-text-stroke:
+        3px var(--paper);
+}
+
+.splash-subtitle{
+    max-width:580px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    color:#ddd;
+}
+
+.loader{
+    margin-top:38px;
+}
+
+.loader-track{
+    height:25px;
+
+    background:#000;
+
+    border:4px solid var(--paper);
+
+    padding:3px;
+}
+
+.loader-bar{
+    height:100%;
+    width:0%;
+
+    background:var(--lime);
+
+    transition:width .15s linear;
+}
+
+.loader-meta{
+    display:flex;
+    justify-content:space-between;
+
+    margin-top:8px;
+
+    font-family:
+        monospace;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar{
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:72px;
+
+    padding:
+        0
+        clamp(14px,3vw,35px);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    z-index:500;
+
+    pointer-events:none;
+}
+
+.brand{
+    pointer-events:auto;
+
+    background:var(--black);
+    color:var(--lime);
+
+    border:4px solid var(--lime);
+
+    padding:8px 12px;
+
+    font-size:12px;
+    letter-spacing:2px;
+
+    box-shadow:
+        5px 5px 0 var(--pink);
+
+    transform:rotate(-1deg);
+}
+
+.top-controls{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    pointer-events:auto;
+
+    width:43px;
+    height:43px;
+
+    border:4px solid #000;
+
+    background:var(--paper);
+
+    color:#000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    font-weight:900;
+    font-size:15px;
+
+    box-shadow:
+        5px 5px 0 #000;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.icon-btn:hover{
+    background:var(--pink);
+}
+
+.icon-btn:active{
+    transform:translate(4px,4px);
+    box-shadow:1px 1px 0 #000;
+}
+
+
+/* =========================================================
+   SCENES
+   ========================================================= */
+
+.scene{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:
+        95px
+        max(20px,5vw)
+        90px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:
+        translateY(45px)
+        rotate(.5deg)
+        scale(.97);
+
+    transition:
+        opacity .6s var(--ease),
+        transform .6s var(--ease),
+        visibility .6s;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.scene.active{
+    opacity:1;
+    visibility:visible;
+
+    transform:none;
+}
+
+.scene-inner{
+    width:min(100%,1100px);
+
+    position:relative;
+    z-index:5;
+}
+
+
+/* =========================================================
+   BRUTALIST COMMON ELEMENTS
+   ========================================================= */
+
+.stamp{
+    display:inline-block;
+
+    padding:7px 12px;
+
+    background:var(--lime);
+
+    border:4px solid #000;
+
+    color:#000;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        5px 5px 0 #000;
+
+    transform:rotate(-2deg);
+
+    margin-bottom:25px;
+}
+
+.stamp.pink{
+    background:var(--pink);
+}
+
+.stamp.white{
+    background:var(--paper);
+}
+
+.section-kicker{
+    display:inline-block;
+
+    background:#000;
+    color:var(--lime);
+
+    padding:7px 10px;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    margin-bottom:15px;
+
+    border:3px solid var(--lime);
+}
+
+.section-title{
+    font-size:
+        clamp(42px,8vw,90px);
+
+    line-height:.82;
+
+    letter-spacing:-5px;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+    color:#000;
+
+    text-shadow:
+        4px 4px 0 var(--pink);
+}
+
+.section-description{
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-weight:700;
+
+    line-height:1.65;
+
+    max-width:700px;
+
+    color:#333;
+}
+
+
+/* =========================================================
+   WELCOME
+   ========================================================= */
+
+.welcome-card{
+    position:relative;
+
+    padding:
+        clamp(30px,6vw,70px);
+
+    background:var(--paper2);
+
+    border:
+        6px solid #000;
+
+    box-shadow:
+        var(--hard-shadow-big);
+
+    overflow:hidden;
+}
+
+.welcome-card::before{
+    content:"MERCYVERSE";
+
+    position:absolute;
+
+    right:-40px;
+    top:25px;
+
+    background:var(--pink);
+
+    border:5px solid #000;
+
+    padding:12px 25px;
+
+    font-size:14px;
+
+    letter-spacing:3px;
+
+    transform:rotate(8deg);
+
+    box-shadow:
+        7px 7px 0 #000;
+}
+
+.welcome-card::after{
+    content:"♥";
+
+    position:absolute;
+
+    right:45px;
+    bottom:25px;
+
+    width:70px;
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--lime);
+
+    border:5px solid #000;
+
+    font-size:35px;
+
+    box-shadow:
+        7px 7px 0 #000;
+
+    transform:rotate(-8deg);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    padding:8px 12px;
+
+    background:#000;
+
+    color:var(--lime);
+
+    border:3px solid var(--lime);
+
+    font-size:10px;
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:28px;
+}
+
+.badge-dot{
+    width:9px;
+    height:9px;
+
+    background:var(--pink);
+
+    border:2px solid var(--paper);
+}
+
+.welcome-title{
+    font-size:
+        clamp(55px,11vw,115px);
+
+    line-height:.75;
+
+    letter-spacing:-8px;
+
+    text-transform:uppercase;
+
+    margin-bottom:35px;
+
+    max-width:800px;
+}
+
+.gradient-text{
+    display:inline-block;
+
+    color:var(--pink);
+
+    -webkit-text-stroke:
+        3px #000;
+
+    text-shadow:
+        8px 8px 0 var(--lime);
+}
+
+.welcome-description{
+    max-width:690px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    line-height:1.8;
+
+    color:#292929;
+}
+
+.signature{
+    margin:
+        30px
+        0
+        35px;
+
+    display:inline-block;
+
+    background:var(--lime);
+
+    border:4px solid #000;
+
+    padding:10px 14px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-weight:bold;
+
+    transform:rotate(-1deg);
+
+    box-shadow:
+        5px 5px 0 #000;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-btn,
+.secondary-btn{
+    appearance:none;
+
+    border:5px solid #000;
+
+    cursor:pointer;
+
+    font-family:
+        Arial Black,
+        Impact,
+        sans-serif;
+
+    font-size:12px;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+    padding:
+        15px
+        20px;
+
+    transition:
+        transform .12s ease,
+        box-shadow .12s ease,
+        background .15s ease;
+}
+
+.primary-btn{
+    background:var(--pink);
+
+    color:#000;
+
+    box-shadow:
+        7px 7px 0 #000;
+}
+
+.secondary-btn{
+    background:var(--paper);
+
+    color:#000;
+
+    box-shadow:
+        6px 6px 0 #000;
+}
+
+.primary-btn:hover{
+    background:var(--lime);
+}
+
+.secondary-btn:hover{
+    background:var(--cyan);
+}
+
+.primary-btn:active,
+.secondary-btn:active{
+    transform:
+        translate(6px,6px);
+
+    box-shadow:
+        1px 1px 0 #000;
+}
+
+
+/* =========================================================
+   LETTER LAYOUT
+   ========================================================= */
+
+.letter-layout{
+    display:grid;
+
+    grid-template-columns:
+        .72fr
+        1.28fr;
+
+    gap:25px;
+
+    margin-top:30px;
+}
+
+.letter-cover{
+    min-height:520px;
+
+    background:var(--black);
+
+    color:var(--paper);
+
+    border:
+        6px solid var(--black);
+
+    padding:35px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+    box-shadow:
+        12px 12px 0 var(--pink);
+
+    overflow:hidden;
+}
+
+.letter-cover::before{
+    content:"PRIVATE";
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    border:3px solid var(--lime);
+
+    color:var(--lime);
+
+    padding:6px 9px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    transform:rotate(-5deg);
+}
+
+.letter-cover::after{
+    content:"LOVE FILE // 001";
+
+    position:absolute;
+
+    bottom:20px;
+    right:20px;
+
+    color:#777;
+
+    font-family:monospace;
+
+    font-size:9px;
+
+    transform:rotate(-90deg);
+}
+
+.letter-seal{
+    width:120px;
+    height:120px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--pink);
+
+    color:#000;
+
+    border:
+        6px solid #000;
+
+    font-size:45px;
+
+    box-shadow:
+        9px 9px 0 var(--lime);
+
+    transform:rotate(-7deg);
+
+    margin-bottom:30px;
+}
+
+.letter-cover h3{
+    font-size:34px;
+
+    text-transform:uppercase;
+
+    margin-bottom:12px;
+}
+
+.letter-cover p{
+    font-family:Arial,sans-serif;
+
+    color:#ccc;
+
+    line-height:1.7;
+
+    font-size:13px;
+}
+
+.letter-paper{
+    background:var(--paper2);
+
+    border:
+        6px solid #000;
+
+    padding:
+        clamp(25px,4vw,45px);
+
+    max-height:650px;
+
+    overflow-y:auto;
+
+    box-shadow:
+        12px 12px 0 var(--black);
+
+    position:relative;
+}
+
+.letter-paper::before{
+    content:"DEAR MERCY";
+
+    position:sticky;
+
+    top:-45px;
+
+    float:right;
+
+    background:var(--lime);
+
+    border:4px solid #000;
+
+    color:#000;
+
+    padding:7px 10px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    transform:rotate(2deg);
+
+    z-index:2;
+}
+
+.letter-greeting{
+    font-size:34px;
+
+    line-height:1;
+
+    text-transform:uppercase;
+
+    margin-bottom:25px;
+
+    color:#000;
+
+    text-shadow:
+        3px 3px 0 var(--pink);
+}
+
+.letter-text{
+    font-family:
+        Arial,
+        sans-serif;
+
+    color:#171717;
+
+    line-height:1.9;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+.letter-text p{
+    margin-bottom:19px;
+}
+
+.letter-text strong{
+    background:var(--lime);
+
+    color:#000;
+
+    padding:2px 5px;
+
+    border:
+        2px solid #000;
+}
+
+.letter-text .highlight{
+    color:#000;
+
+    background:var(--pink);
+
+    padding:
+        2px
+        5px;
+
+    border:
+        2px solid #000;
+}
+
+.letter-sign{
+    margin-top:25px;
+
+    padding-top:25px;
+
+    border-top:
+        5px solid #000;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:20px;
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
+
+.gallery-header{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:30px;
+}
+
+.gallery-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:16px;
+}
+
+.memory-card{
+    aspect-ratio:3/4;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#000;
+
+    border:
+        5px solid #000;
+
+    cursor:pointer;
+
+    box-shadow:
+        7px 7px 0 var(--black);
+
+    transition:
+        transform .2s var(--ease),
+        box-shadow .2s ease;
+}
+
+.memory-card:nth-child(2){
+    transform:rotate(1deg);
+}
+
+.memory-card:nth-child(3){
+    transform:rotate(-1deg);
+}
+
+.memory-card:nth-child(5){
+    transform:rotate(1deg);
+}
+
+.memory-card:nth-child(7){
+    transform:rotate(-1deg);
+}
+
+.memory-card:hover{
+    transform:
+        translate(-4px,-4px)
+        rotate(0deg);
+
+    box-shadow:
+        11px 11px 0 var(--pink);
+}
+
+.memory-card img{
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:
+        grayscale(.2)
+        contrast(1.1);
+
+    transition:
+        transform .4s ease,
+        filter .4s ease;
+}
+
+.memory-card:hover img{
+    transform:scale(1.08);
+
+    filter:
+        grayscale(0)
+        contrast(1.05);
+}
+
+.memory-overlay{
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:end;
+
+    padding:13px;
+
+    background:
+        linear-gradient(
+            transparent 45%,
+            rgba(0,0,0,.9)
+        );
+}
+
+.memory-number{
+    display:inline-block;
+
+    background:var(--lime);
+
+    color:#000;
+
+    border:3px solid #000;
+
+    padding:4px 7px;
+
+    font-size:8px;
+
+    letter-spacing:1px;
+
+    margin-bottom:5px;
+}
+
+.memory-caption{
+    color:#fff;
+
+    font-size:15px;
+
+    line-height:1;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        2px 2px 0 #000;
+}
+
+
+/* =========================================================
+   MEMORY VIEWER
+   ========================================================= */
+
+#memoryViewer{
+    position:fixed;
+
+    inset:0;
+
+    z-index:8000;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(255,59,157,.94);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s ease;
+}
+
+#memoryViewer.open{
+    opacity:1;
+    visibility:visible;
+}
+
+.viewer-content{
+    width:min(900px,95vw);
+    height:min(88vh,800px);
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.viewer-image{
+    max-width:85%;
+    max-height:85%;
+
+    object-fit:contain;
+
+    border:
+        7px solid #000;
+
+    box-shadow:
+        15px 15px 0 #000;
+
+    background:#000;
+}
+
+.viewer-close{
+    position:absolute;
+
+    top:0;
+    right:0;
+
+    width:50px;
+    height:50px;
+
+    border:
+        5px solid #000;
+
+    background:var(--lime);
+
+    color:#000;
+
+    cursor:pointer;
+
+    font-size:25px;
+
+    font-weight:900;
+
+    box-shadow:
+        6px 6px 0 #000;
+}
+
+.viewer-nav{
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    display:flex;
+    justify-content:space-between;
+
+    pointer-events:none;
+}
+
+.viewer-nav button{
+    pointer-events:auto;
+
+    width:55px;
+    height:55px;
+
+    border:
+        5px solid #000;
+
+    background:var(--paper);
+
+    color:#000;
+
+    cursor:pointer;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    box-shadow:
+        6px 6px 0 #000;
+}
+
+.viewer-nav button:hover{
+    background:var(--lime);
+}
+
+
+/* =========================================================
+   SURPRISE
+   ========================================================= */
+
+.surprise-wrap{
+    text-align:center;
+}
+
+.gift-stage{
+    width:270px;
+    height:270px;
+
+    margin:
+        0
+        auto
+        30px;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.gift-glow{
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    background:var(--pink);
+
+    border:
+        7px solid #000;
+
+    transform:rotate(45deg);
+
+    animation:
+        brutalGlow 2s infinite;
+}
+
+@keyframes brutalGlow{
+
+    0%,100%{
+        transform:
+            rotate(45deg)
+            scale(.8);
+    }
+
+    50%{
+        transform:
+            rotate(45deg)
+            scale(1.05);
+    }
+}
+
+.gift{
+    width:125px;
+    height:110px;
+
+    position:relative;
+
+    cursor:pointer;
+
+    z-index:2;
+
+    transition:
+        transform .3s var(--ease);
+}
+
+.gift:hover{
+    transform:
+        translateY(-10px)
+        rotate(-3deg);
+}
+
+.gift-box{
+    position:absolute;
+
+    width:120px;
+    height:75px;
+
+    bottom:0;
+
+    background:var(--pink);
+
+    border:
+        6px solid #000;
+
+    box-shadow:
+        7px 7px 0 #000;
+}
+
+.gift-lid{
+    position:absolute;
+
+    width:132px;
+    height:30px;
+
+    left:-6px;
+    top:14px;
+
+    background:var(--lime);
+
+    border:
+        6px solid #000;
+
+    z-index:3;
+
+    transition:
+        transform .7s var(--ease);
+}
+
+.gift-ribbon-v{
+    position:absolute;
+
+    width:18px;
+    height:105px;
+
+    left:48px;
+    bottom:0;
+
+    background:#000;
+
+    z-index:4;
+}
+
+.gift-ribbon-h{
+    position:absolute;
+
+    width:132px;
+    height:15px;
+
+    left:-6px;
+    top:22px;
+
+    background:#000;
+
+    z-index:4;
+}
+
+.gift-bow{
+    position:absolute;
+
+    top:-3px;
+    left:45px;
+
+    width:30px;
+    height:25px;
+
+    z-index:6;
+}
+
+.gift-bow::before,
+.gift-bow::after{
+    content:"";
+
+    position:absolute;
+
+    width:28px;
+    height:20px;
+
+    background:var(--pink);
+
+    border:
+        5px solid #000;
+}
+
+.gift-bow::before{
+    left:-24px;
+    transform:rotate(-25deg);
+}
+
+.gift-bow::after{
+    left:18px;
+    transform:rotate(25deg);
+}
+
+.gift.open .gift-lid{
+    transform:
+        translateY(-70px)
+        rotate(-10deg);
+}
+
+.gift.open{
+    transform:
+        translateY(15px);
+}
+
+.surprise-message{
+    max-width:760px;
+
+    margin:auto;
+
+    display:none;
+
+    animation:
+        brutalReveal .7s var(--ease)
+        forwards;
+}
+
+.surprise-message.show{
+    display:block;
+}
+
+@keyframes brutalReveal{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(30px)
+            rotate(-2deg)
+            scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.surprise-message h2{
+    font-size:
+        clamp(48px,9vw,105px);
+
+    line-height:.78;
+
+    letter-spacing:-6px;
+
+    text-transform:uppercase;
+
+    margin-bottom:25px;
+
+    text-shadow:
+        7px 7px 0 var(--lime);
+}
+
+.surprise-message p{
+    font-family:Arial,sans-serif;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    line-height:1.8;
+}
+
+.final-quote{
+    margin:
+        30px
+        auto;
+
+    padding:22px;
+
+    max-width:650px;
+
+    background:#000;
+
+    color:var(--paper);
+
+    border:
+        5px solid var(--lime);
+
+    box-shadow:
+        8px 8px 0 var(--pink);
+
+    text-align:left;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:18px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   FINAL SCREEN
+   ========================================================= */
+
+.final-screen{
+    text-align:center;
+
+    background:var(--paper2);
+
+    border:
+        6px solid #000;
+
+    padding:
+        clamp(30px,6vw,70px);
+
+    box-shadow:
+        14px 14px 0 var(--pink);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.final-screen::before{
+    content:"THE END?";
+
+    position:absolute;
+
+    top:20px;
+    right:-30px;
+
+    background:var(--lime);
+
+    border:
+        4px solid #000;
+
+    padding:
+        8px
+        35px;
+
+    font-size:10px;
+
+    transform:rotate(8deg);
+
+    box-shadow:
+        5px 5px 0 #000;
+}
+
+.final-heart{
+    display:inline-flex;
+
+    width:100px;
+    height:100px;
+
+    align-items:center;
+    justify-content:center;
+
+    background:var(--pink);
+
+    border:
+        6px solid #000;
+
+    font-size:55px;
+
+    box-shadow:
+        10px 10px 0 var(--lime);
+
+    animation:
+        brutalBeat 1.4s infinite;
+
+    margin-bottom:25px;
+}
+
+.final-screen h1{
+    font-size:
+        clamp(55px,11vw,120px);
+
+    line-height:.72;
+
+    letter-spacing:-8px;
+
+    text-transform:uppercase;
+
+    margin-bottom:30px;
+}
+
+.final-screen p{
+    max-width:680px;
+
+    margin:
+        0
+        auto
+        25px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    line-height:1.8;
+}
+
+.final-sign{
+    display:inline-block;
+
+    background:var(--black);
+
+    color:var(--lime);
+
+    border:
+        4px solid var(--lime);
+
+    padding:
+        12px
+        18px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:20px;
+
+    box-shadow:
+        6px 6px 0 var(--pink);
+
+    margin-bottom:25px;
+}
+
+
+/* =========================================================
+   SCENE NAVIGATION
+   ========================================================= */
+
+.scene-nav{
+    position:fixed;
+
+    left:50%;
+    bottom:22px;
+
+    transform:translateX(-50%);
+
+    z-index:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:9px 12px;
+
+    background:#000;
+
+    border:
+        4px solid var(--lime);
+
+    box-shadow:
+        6px 6px 0 var(--pink);
+}
+
+.scene-dot{
+    width:11px;
+    height:11px;
+
+    background:#444;
+
+    border:
+        2px solid #fff;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.scene-dot:hover{
+    background:var(--pink);
+}
+
+.scene-dot.active{
+    width:30px;
+
+    background:var(--lime);
+
+    border-color:#000;
+}
+
+
+/* =========================================================
+   NEXT AREA
+   ========================================================= */
+
+.next-area{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:32px;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+#toast{
+    position:fixed;
+
+    left:50%;
+    bottom:82px;
+
+    transform:
+        translate(-50%,30px)
+        rotate(-2deg);
+
+    padding:
+        12px
+        17px;
+
+    background:var(--lime);
+
+    color:#000;
+
+    border:
+        4px solid #000;
+
+    box-shadow:
+        6px 6px 0 var(--pink);
+
+    font-size:11px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    z-index:9000;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s var(--ease);
+
+    white-space:nowrap;
+}
+
+#toast.show{
+    opacity:1;
+    visibility:visible;
+
+    transform:
+        translate(-50%,0)
+        rotate(-2deg);
+}
+
+
+/* =========================================================
+   HEART / GHOST BURST
+   ========================================================= */
+
+.burst{
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:9500;
+
+    font-size:22px;
+
+    animation:
+        burst .8s ease forwards;
+}
+
+@keyframes burst{
+
+    0%{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.4)
+            rotate(0deg);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            scale(1.5)
+            rotate(var(--r));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:800px){
+
+    .scene{
+        align-items:flex-start;
+
+        padding:
+            90px
+            16px
+            90px;
+    }
+
+    .scene-inner{
+        margin:auto 0;
+    }
+
+    .letter-layout{
+        grid-template-columns:1fr;
+    }
+
+    .letter-cover{
+        min-height:300px;
+    }
+
+    .letter-paper{
+        max-height:none;
+    }
+
+    .gallery-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .gallery-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
+    }
+
+    .memory-card{
+        box-shadow:
+            5px 5px 0 #000;
+    }
+
+    .welcome-card{
+        box-shadow:
+            9px 9px 0 #000;
+    }
+
+    .section-title{
+        letter-spacing:-3px;
+    }
+
+    .topbar{
+        height:62px;
+    }
+
+    .brand{
+        font-size:9px;
+    }
+
+    .icon-btn{
+        width:38px;
+        height:38px;
+    }
+}
+
+
+@media(max-width:500px){
+
+    .splash-title{
+        letter-spacing:-4px;
+    }
+
+    .splash-title span:last-child{
+        -webkit-text-stroke:
+            2px var(--paper);
+    }
+
+    .welcome-title{
+        font-size:52px;
+
+        letter-spacing:-4px;
+    }
+
+    .welcome-card::before{
+        display:none;
+    }
+
+    .welcome-card::after{
+        width:50px;
+        height:50px;
+
+        right:20px;
+        bottom:20px;
+
+        font-size:24px;
+    }
+
+    .welcome-description{
+        font-size:13px;
+        line-height:1.7;
+    }
+
+    .section-title{
+        font-size:45px;
+    }
+
+    .letter-greeting{
+        font-size:27px;
+    }
+
+    .letter-text{
+        font-size:13px;
+    }
+
+    .gallery-grid{
+        gap:9px;
+    }
+
+    .memory-card{
+        border-width:4px;
+    }
+
+    .memory-caption{
+        font-size:11px;
+    }
+
+    .memory-number{
+        font-size:7px;
+    }
+
+    .scene-nav{
+        bottom:15px;
+    }
+
+    .scene-dot{
+        width:8px;
+        height:8px;
+    }
+
+    .scene-dot.active{
+        width:23px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+        max-width:330px;
+    }
+
+    .final-screen{
+        padding:28px 20px;
+    }
+
+    .final-screen h1{
+        font-size:65px;
+        letter-spacing:-5px;
+    }
+
+    .final-screen p{
+        font-size:13px;
+    }
+
+    .surprise-message h2{
+        font-size:55px;
+    }
+
+    .viewer-image{
+        max-width:90%;
+        max-height:75%;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible{
+    outline:
+        4px solid var(--cyan);
+
+    outline-offset:
+        4px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.001ms !important;
+        scroll-behavior:auto !important;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     BRUTAL BACKGROUND
+     ======================================================= -->
+
+<div id="universe">
+
+    <div class="grid-bg"></div>
+
+    <div class="color-block one"></div>
+    <div class="color-block two"></div>
+    <div class="color-block three"></div>
+
+    <div id="particles"></div>
+
+</div>
+
+
+<!-- =======================================================
+     SPLASH
+     ======================================================= -->
+
+<section id="splash">
+
+    <div class="splash-content">
+
+        <div class="splash-top">
+
+            <div class="splash-sticker">
+                LOVE FILE // 001
+            </div>
+
+            <div class="splash-code">
+                DEV-BRIAN / 2026
+            </div>
+
+        </div>
+
+
+        <div class="mini-orbit">
+
+            <div class="orbit-ring"></div>
+
+            <div class="orbit-ring two"></div>
+
+            <div class="orbit-heart">
+                ♥
+            </div>
+
+        </div>
+
+
+        <div class="kicker">
+            A tiny universe for one person
+        </div>
+
+
+        <h1 class="splash-title">
+
+            <span>
+                MERCY
+            </span>
+
+            <span>
+                MERAB
+            </span>
+
+        </h1>
+
+
+        <p class="splash-subtitle">
+
+            This isn't a normal website.
+
+            It's a love letter,
+            memory archive,
+            emotional support system,
+            tiny haunted house,
+            and completely unnecessary digital
+            masterpiece built for one special girl.
+
+        </p>
+
+
+        <div class="loader">
+
+            <div class="loader-track">
+
+                <div
+                    id="loaderBar"
+                    class="loader-bar">
+                </div>
+
+            </div>
+
+
+            <div class="loader-meta">
+
+                <span>
+                    BUILDING MERCYVERSE
+                </span>
+
+                <span id="loaderPercent">
+                    0%
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     TOP BAR
+     ======================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+        MERCYVERSE // BRUTAL
+    </div>
+
+
+    <div class="top-controls">
+
+        <button
+            class="icon-btn"
+            id="musicBtn"
+            aria-label="Toggle music">
+
+            ♫
+
+        </button>
+
+
+        <button
+            class="icon-btn"
+            id="soundBtn"
+            aria-label="Toggle sound">
+
+            ●
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN APP
+     ======================================================= -->
+
+<main id="app">
+
+
+<!-- =======================================================
+     SCENE 01
+     ======================================================= -->
+
+<section
+    class="scene active"
+    data-scene="0">
+
+    <div class="scene-inner">
+
+        <div class="welcome-card">
+
+            <div class="badge">
+
+                <span class="badge-dot"></span>
+
+                PRIVATE LITTLE UNIVERSE
+
+            </div>
+
+
+            <h1 class="welcome-title">
+
+                HEY,
+
+                <span class="gradient-text">
+                    MERCY.
+                </span>
+
+            </h1>
+
+
+            <p class="welcome-description">
+
+                I could have written you a normal message.
+
+                I could have opened WhatsApp,
+                typed “I love you,”
+                added a few hearts,
+                and called it a day.
+
+                <br><br>
+
+                But honestly...
+
+                <strong>
+                    YOU DESERVE MORE THAN THAT.
+                </strong>
+
+                <br><br>
+
+                So I built you a tiny universe.
+
+                A strange little corner of the internet
+                where memories can breathe,
+                where my words can stay longer,
+                where ghosts can apparently become
+                romantic,
+                and where one very special girl gets
+                to discover just how loved she really is.
+
+            </p>
+
+
+            <div class="signature">
+
+                — Brian,
+                professional overthinker
+                and your personal lover. ❤️
+
+            </div>
+
+
+            <div class="next-area">
+
+                <button
+                    class="primary-btn"
+                    onclick="nextScene()">
+
+                    ENTER THE UNIVERSE →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCENE 02
+     ======================================================= -->
+
+<section
+    class="scene"
+    data-scene="1">
+
+    <div class="scene-inner">
+
+        <div class="section-kicker">
+            CHAPTER 01 // THE BEGINNING
+        </div>
+
+
+        <h2 class="section-title">
+            BEFORE ANYTHING ELSE...
+        </h2>
+
+
+        <p class="section-description">
+
+            There is something I need you to know
+            before you continue.
+
+        </p>
+
+
+        <div class="letter-layout">
+
+
+            <div class="letter-cover">
+
+                <div class="letter-seal">
+                    ♥
+                </div>
+
+
+                <h3>
+                    FOR MERCY
+                </h3>
+
+
+                <p>
+
+                    Open this with your heart.
+
+                    Not just your eyes.
+
+                </p>
+
+            </div>
+
+
+            <div class="letter-paper">
+
+                <div class="letter-greeting">
+
+                    MY BEAUTIFUL MERCY...
+
+                </div>
+
+
+                <div class="letter-text">
+
+                    <p>
+
+                        If you are reading this right now,
+                        congratulations.
+
+                        You have officially entered the
+                        most unnecessarily dramatic
+                        digital love letter I have ever made.
+
+                        😂❤️👻
+
+                    </p>
+
+
+                    <p>
+
+                        And yes...
+
+                        I know I could have simply sent
+                        you a paragraph on WhatsApp.
+
+                        But where is the fun in that?
+
+                    </p>
+
+
+                    <p>
+
+                        You are not just somebody
+                        I wanted to text.
+
+                        You are somebody I wanted to
+
+                        <strong>
+                            BUILD SOMETHING FOR.
+                        </strong>
+
+                    </p>
+
+
+                    <p>
+
+                        Something you could open and
+                        immediately know:
+
+                        <span class="highlight">
+
+                            “Yep...
+                            Brian definitely made this
+                            with his whole heart.”
+
+                        </span>
+
+                    </p>
+
+
+                    <p>
+
+                        So take your time here.
+
+                        Don't rush.
+
+                        Enjoy the weirdness.
+
+                        Enjoy the memories.
+
+                        Enjoy the love.
+
+                        And please don't question why
+                        there are ghosts everywhere.
+
+                        👻😂
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="next-area">
+
+            <button
+                class="primary-btn"
+                onclick="nextScene()">
+
+                I'M READY ♥
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCENE 03
+     ======================================================= -->
+
+<section
+    class="scene"
+    data-scene="2">
+
+    <div class="scene-inner">
+
+        <div class="section-kicker">
+            CHAPTER 02 // THE LETTER
+        </div>
+
+
+        <h2 class="section-title">
+            DEAR MERCY...
+        </h2>
+
+
+        <div
+            class="letter-paper"
+            style="margin-top:25px">
+
+
+            <div class="letter-text">
+
+                <p>
+                    My love,
+                </p>
+
+
+                <p>
+
+                    I don't even know where to begin
+                    because whenever I try to put
+                    everything I feel for you into words,
+                    the words suddenly become too small.
+
+                </p>
+
+
+                <p>
+
+                    But I'll try anyway.
+
+                </p>
+
+
+                <p>
+
+                    Mercy, I want you to know that
+                    I appreciate you.
+
+                    Not just the obvious things.
+
+                    Not just your smile,
+                    your voice,
+                    your presence,
+                    or the beautiful moments we share.
+
+                </p>
+
+
+                <p>
+
+                    I appreciate the little things.
+
+                    The random conversations.
+
+                    The jokes that make absolutely
+                    no sense.
+
+                    The moments when we're both
+                    being stubborn.
+
+                    The moments when we're laughing
+                    like children.
+
+                    The moments when one of us says
+                    something completely ridiculous
+                    and somehow the other person
+                    still finds it funny.
+
+                    😂❤️
+
+                </p>
+
+
+                <p>
+
+                    I love those moments because
+                    they are ours.
+
+                </p>
+
+
+                <p>
+
+                    And if life ever becomes difficult,
+                    I hope you remember that you don't
+                    have to face everything alone.
+
+                </p>
+
+
+                <p>
+
+                    I want to be the person who reminds
+                    you that you are capable when you
+                    forget.
+
+                    The person who tells you to keep
+                    going when you're tired.
+
+                    The person who celebrates you when
+                    things go right.
+
+                    And the person who stays close when
+                    things don't.
+
+                </p>
+
+
+                <p>
+
+                    I don't promise that life will always
+                    be perfect.
+
+                </p>
+
+
+                <p>
+
+                    Actually...
+
+                    let's be realistic.
+
+                    We are probably going to annoy each
+                    other approximately seventeen thousand
+                    times.
+
+                    😂
+
+                </p>
+
+
+                <p>
+
+                    There will be misunderstandings.
+
+                    There will be stressful days.
+
+                    There will be moments when one of us
+                    needs space and moments when the other
+                    needs reassurance.
+
+                </p>
+
+
+                <p>
+
+                    But my promise is not perfection.
+
+                </p>
+
+
+                <p>
+
+                    My promise is that I will keep choosing
+                    communication, honesty, patience,
+                    forgiveness and love.
+
+                </p>
+
+
+                <p>
+
+                    I want us to grow.
+
+                    Not just grow older.
+
+                    Grow wiser.
+
+                    Grow stronger.
+
+                    Grow financially.
+
+                    Grow emotionally.
+
+                    Grow professionally.
+
+                    Grow into two people who can look back
+                    someday and say:
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+
+                        “WOW...
+                        WE REALLY BUILT SOMETHING BEAUTIFUL.”
+
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    And Mercy,
+                    please never underestimate yourself.
+
+                </p>
+
+
+                <p>
+
+                    There are days when you might feel
+                    behind.
+
+                    There are days when you might compare
+                    yourself to somebody else.
+
+                    There are days when your dreams may
+                    seem too far away.
+
+                </p>
+
+
+                <p>
+
+                    On those days,
+                    I want you to remember this:
+
+                </p>
+
+
+                <p>
+
+                    <span class="highlight">
+
+                        YOU ARE STILL BECOMING.
+
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    You don't have to have everything
+                    figured out today.
+
+                </p>
+
+
+                <p>
+
+                    Keep learning.
+
+                    Keep trying.
+
+                    Keep dreaming.
+
+                    Keep praying.
+
+                    Keep working.
+
+                    Keep becoming the woman you want
+                    to be.
+
+                </p>
+
+
+                <p>
+
+                    And whenever you win,
+                    even if the victory seems tiny,
+                    I want to celebrate it with you.
+
+                </p>
+
+
+                <p>
+
+                    If you pass an exam:
+
+                    I'm celebrating.
+
+                </p>
+
+
+                <p>
+
+                    If you accomplish a difficult task:
+
+                    I'm celebrating.
+
+                </p>
+
+
+                <p>
+
+                    If you finally achieve something
+                    you've been working toward for months:
+
+                    I'm probably going to celebrate
+                    louder than you.
+
+                    😂❤️
+
+                </p>
+
+
+                <p>
+
+                    And if you fail?
+
+                </p>
+
+
+                <p>
+
+                    Then we learn.
+
+                </p>
+
+
+                <p>
+
+                    If you fall?
+
+                </p>
+
+
+                <p>
+
+                    Then we breathe.
+
+                </p>
+
+
+                <p>
+
+                    If you're tired?
+
+                </p>
+
+
+                <p>
+
+                    Then we rest.
+
+                </p>
+
+
+                <p>
+
+                    But we don't give up on the beautiful
+                    future we're building.
+
+                </p>
+
+
+                <p>
+
+                    Because I don't want a love that
+                    exists only when everything is easy.
+
+                </p>
+
+
+                <p>
+
+                    I want a love that knows how to
+                    survive the storms.
+
+                </p>
+
+
+                <p>
+
+                    A love that can laugh in the middle
+                    of chaos.
+
+                </p>
+
+
+                <p>
+
+                    A love that can say:
+
+                    “I'm sorry.”
+
+                </p>
+
+
+                <p>
+
+                    A love that can say:
+
+                    “I understand.”
+
+                </p>
+
+
+                <p>
+
+                    A love that can say:
+
+                    “Let's try again.”
+
+                </p>
+
+
+                <p>
+
+                    And sometimes...
+
+                    a love that can simply say:
+
+                </p>
+
+
+                <p>
+
+                    <span class="highlight">
+                        “COME HERE.”
+                    </span>
+
+                    ❤️
+
+                </p>
+
+
+                <p>
+
+                    Now let's talk about something
+                    extremely serious.
+
+                </p>
+
+
+                <p>
+
+                    If a ghost ever appears in our house,
+                    you are officially responsible.
+
+                    👻😂
+
+                </p>
+
+
+                <p>
+
+                    Because apparently loving you has
+                    already opened a portal to another
+                    dimension.
+
+                </p>
+
+
+                <p>
+
+                    Somewhere out there is probably
+                    a ghost watching us and saying:
+
+                </p>
+
+
+                <p>
+
+                    “These two are doing too much.”
+
+                    👻💀😂
+
+                </p>
+
+
+                <p>
+
+                    But honestly?
+
+                </p>
+
+
+                <p>
+
+                    Let them watch.
+
+                </p>
+
+
+                <p>
+
+                    Because I would rather be remembered
+                    as the guy who loved you too loudly
+                    than the guy who loved you quietly
+                    because he was afraid to show it.
+
+                </p>
+
+
+                <p>
+
+                    I want you to know that your happiness
+                    matters to me.
+
+                </p>
+
+
+                <p>
+
+                    Your dreams matter.
+
+                    Your fears matter.
+
+                    Your goals matter.
+
+                    Your little victories matter.
+
+                    Your bad days matter.
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        YOU MATTER.
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    And I hope that whenever you doubt
+                    that, you come back to this little
+                    universe and remember that somewhere
+                    there is a man who sat down and decided:
+
+                </p>
+
+
+                <p>
+
+                    “I'm going to build something
+                    just for her.”
+
+                </p>
+
+
+                <p>
+
+                    Not because a website can measure love.
+
+                </p>
+
+
+                <p>
+
+                    It can't.
+
+                </p>
+
+
+                <p>
+
+                    But because sometimes love needs
+                    somewhere to leave fingerprints.
+
+                </p>
+
+
+                <p>
+
+                    This is one of mine.
+
+                </p>
+
+
+                <p>
+
+                    So here is my promise:
+
+                </p>
+
+
+                <p>
+
+                    I will keep learning how to love
+                    you better.
+
+                </p>
+
+
+                <p>
+
+                    I will keep supporting your dreams.
+
+                </p>
+
+
+                <p>
+
+                    I will celebrate your growth.
+
+                </p>
+
+
+                <p>
+
+                    I will laugh with you.
+
+                </p>
+
+
+                <p>
+
+                    I will annoy you occasionally.
+
+                    Okay...
+
+                    maybe frequently.
+
+                    😂
+
+                </p>
+
+
+                <p>
+
+                    I will remind you that you're beautiful
+                    even on the days you don't feel beautiful.
+
+                </p>
+
+
+                <p>
+
+                    I will remind you that you're strong
+                    when you feel weak.
+
+                </p>
+
+
+                <p>
+
+                    And I will remind you that your story
+                    isn't finished just because today's
+                    chapter is difficult.
+
+                </p>
+
+
+                <p>
+
+                    There are still pages we haven't written.
+
+                </p>
+
+
+                <p>
+
+                    Places we haven't visited.
+
+                </p>
+
+
+                <p>
+
+                    Dreams we haven't achieved.
+
+                </p>
+
+
+                <p>
+
+                    Photos we haven't taken.
+
+                </p>
+
+
+                <p>
+
+                    Arguments we haven't had.
+
+                    😂
+
+                </p>
+
+
+                <p>
+
+                    Jokes we haven't laughed at.
+
+                </p>
+
+
+                <p>
+
+                    Adventures we haven't experienced.
+
+                </p>
+
+
+                <p>
+
+                    And countless ordinary days that might
+                    secretly become our favorite memories.
+
+                </p>
+
+
+                <p>
+
+                    So, Mercy...
+
+                </p>
+
+
+                <p>
+
+                    Let's not rush our story.
+
+                </p>
+
+
+                <p>
+
+                    Let's live it.
+
+                </p>
+
+
+                <p>
+
+                    Let's build it.
+
+                </p>
+
+
+                <p>
+
+                    Let's protect it.
+
+                </p>
+
+
+                <p>
+
+                    Let's laugh through it.
+
+                </p>
+
+
+                <p>
+
+                    Let's grow through it.
+
+                </p>
+
+
+                <p>
+
+                    And most importantly...
+
+                </p>
+
+
+                <p>
+
+                    <span class="highlight">
+
+                        LET'S KEEP CHOOSING EACH OTHER.
+
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    Through ordinary mornings.
+
+                    Through crazy nights.
+
+                    Through beautiful surprises.
+
+                    Through scary seasons.
+
+                    Through every little haunted adventure.
+
+                    👻❤️
+
+                </p>
+
+
+                <p>
+
+                    Because if I get to walk through life
+                    with someone who can make me smile,
+                    challenge me,
+                    inspire me,
+                    annoy me,
+                    make me laugh
+                    and still somehow make my heart
+                    feel at home...
+
+                </p>
+
+
+                <p>
+
+                    then I already have something incredibly
+                    special.
+
+                </p>
+
+
+                <p>
+
+                    And that something is you.
+
+                </p>
+
+
+                <div class="letter-sign">
+
+                    FOREVER GRATEFUL FOR YOU.
+
+                    <br><br>
+
+                    With all my heart,
+
+                    <br>
+
+                    Brian ❤️
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="next-area">
+
+            <button
+                class="primary-btn"
+                onclick="nextScene()">
+
+                CONTINUE OUR STORY →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCENE 04 — MEMORIES
+     ======================================================= -->
+
+<section
+    class="scene"
+    data-scene="3">
+
+    <div class="scene-inner">
+
+        <div class="gallery-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    CHAPTER 03 // MEMORY ARCHIVE
+                </div>
+
+                <h2 class="section-title">
+                    LITTLE PIECES OF US.
+                </h2>
+
+                <p class="section-description">
+
+                    Every picture has a story.
+
+                    Every story has a feeling.
+
+                    And somehow...
+
+                    every feeling leads me back to you.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="gallery-grid"
+            id="gallery">
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(0)">
+
+                <img
+                    src="f0.jpg"
+                    alt="Memory 01"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 01
+                        </div>
+
+                        <div class="memory-caption">
+                            MY FAVORITE PERSON.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(1)">
+
+                <img
+                    src="f1.jpg"
+                    alt="Memory 02"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 02
+                        </div>
+
+                        <div class="memory-caption">
+                            A BEAUTIFUL MOMENT.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(2)">
+
+                <img
+                    src="f2.jpg"
+                    alt="Memory 03"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 03
+                        </div>
+
+                        <div class="memory-caption">
+                            THAT SMILE.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(3)">
+
+                <img
+                    src="f3.jpg"
+                    alt="Memory 04"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 04
+                        </div>
+
+                        <div class="memory-caption">
+                            US BEING US.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(4)">
+
+                <img
+                    src="f5.jpg"
+                    alt="Memory 05"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 05
+                        </div>
+
+                        <div class="memory-caption">
+                            ONE FOR THE HEART.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(5)">
+
+                <img
+                    src="f7.jpg"
+                    alt="Memory 06"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 06
+                        </div>
+
+                        <div class="memory-caption">
+                            FOREVER VIBES.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(6)">
+
+                <img
+                    src="f10.jpg"
+                    alt="Memory 07"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 07
+                        </div>
+
+                        <div class="memory-caption">
+                            MY SAFE PLACE.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="memory-card"
+                onclick="openMemory(7)">
+
+                <img
+                    src="f15.jpg"
+                    alt="Memory 08"
+                    onerror="this.style.display='none'">
+
+                <div class="memory-overlay">
+
+                    <div>
+
+                        <div class="memory-number">
+                            MEMORY 08
+                        </div>
+
+                        <div class="memory-caption">
+                            STILL CHOOSING YOU.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="next-area">
+
+            <button
+                class="primary-btn"
+                onclick="nextScene()">
+
+                THERE'S SOMETHING FOR YOU →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCENE 05 — SURPRISE
+     ======================================================= -->
+
+<section
+    class="scene"
+    data-scene="4">
+
+    <div class="scene-inner surprise-wrap">
+
+        <div class="section-kicker">
+            CHAPTER 04 // CLASSIFIED
+        </div>
+
+
+        <h2 class="section-title">
+            ONE LAST THING.
+        </h2>
+
+
+        <p
+            class="section-description"
+            style="margin:0 auto 20px">
+
+            You have officially reached the
+            suspiciously cute section of this website.
+
+            Something is waiting for you.
+
+        </p>
+
+
+        <div class="gift-stage">
+
+            <div class="gift-glow"></div>
+
+
+            <div
+                class="gift"
+                id="gift"
+                onclick="openGift()">
+
+                <div class="gift-lid"></div>
+
+                <div class="gift-bow"></div>
+
+                <div class="gift-box"></div>
+
+                <div class="gift-ribbon-v"></div>
+
+                <div class="gift-ribbon-h"></div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="surpriseMessage"
+            class="surprise-message">
+
+            <h2>
+
+                BOO!
+
+                <br>
+
+                I LOVE YOU.
+
+            </h2>
+
+
+            <p>
+
+                You thought it was a normal little gift,
+                didn't you?
+
+            </p>
+
+
+            <div class="final-quote">
+
+                “If I had to choose one person to annoy,
+                laugh with,
+                grow with,
+                dream with
+                and love through this crazy little
+                adventure called life...
+
+                I'd still choose you.”
+
+            </div>
+
+
+            <p>
+
+                And yes...
+
+                the ghosts approve.
+
+                👻❤️💀
+
+            </p>
+
+
+            <div class="next-area">
+
+                <button
+                    class="primary-btn"
+                    onclick="nextScene()">
+
+                    REVEAL THE FINAL CHAPTER →
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="giftHint"
+            style="
+                color:#333;
+                font-family:monospace;
+                font-weight:bold;
+                font-size:11px;
+                margin-top:10px;
+            ">
+
+            [ TAP THE GIFT ]
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCENE 06 — FINAL
+     ======================================================= -->
+
+<section
+    class="scene"
+    data-scene="5">
+
+    <div class="scene-inner final-screen">
+
+        <div class="final-heart">
+            ♥
+        </div>
+
+
+        <div class="section-kicker">
+            CHAPTER 05 // FOREVER
+        </div>
+
+
+        <h1>
+
+            US.
+
+            <br>
+
+            <span class="gradient-text">
+                ALWAYS.
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Mercy, this little website will eventually
+            disappear from the screen.
+
+            The animations will stop.
+
+            The music will end.
+
+            The particles will fade.
+
+            The ghosts will go back to haunting
+            whoever they were haunting before.
+
+            👻😂
+
+            <br><br>
+
+            But the reason I made this won't disappear.
+
+        </p>
+
+
+        <p>
+
+            I wanted to create something that could
+            remind you that you are loved,
+            appreciated,
+            supported,
+            admired
+            and deeply special.
+
+        </p>
+
+
+        <p>
+
+            Whatever happens next in our story,
+
+            I hope we keep making memories worth
+            remembering.
+
+        </p>
+
+
+        <div class="final-sign">
+
+            YOURS IN EVERY CHAPTER,
+
+            <br>
+
+            BRIAN ❤️
+
+        </div>
+
+
+        <div class="next-area">
+
+            <button
+                class="primary-btn"
+                onclick="replayExperience()">
+
+                ↻ EXPERIENCE IT AGAIN
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =======================================================
+     NAVIGATION
+     ======================================================= -->
+
+<nav
+    class="scene-nav"
+    aria-label="Experience navigation">
+
+    <span
+        class="scene-dot active"
+        onclick="goToScene(0)">
+    </span>
+
+    <span
+        class="scene-dot"
+        onclick="goToScene(1)">
+    </span>
+
+    <span
+        class="scene-dot"
+        onclick="goToScene(2)">
+    </span>
+
+    <span
+        class="scene-dot"
+        onclick="goToScene(3)">
+    </span>
+
+    <span
+        class="scene-dot"
+        onclick="goToScene(4)">
+    </span>
+
+    <span
+        class="scene-dot"
+        onclick="goToScene(5)">
+    </span>
+
+</nav>
+
+
+<!-- =======================================================
+     MEMORY VIEWER
+     ======================================================= -->
+
+<div id="memoryViewer">
+
+    <div class="viewer-content">
+
+        <button
+            class="viewer-close"
+            onclick="closeMemory()">
+
+            ×
+
+        </button>
+
+
+        <img
+            id="viewerImage"
+            class="viewer-image"
+            src=""
+            alt="Memory">
+
+
+        <div class="viewer-nav">
+
+            <button
+                onclick="previousMemory()">
+
+                ‹
+
+            </button>
+
+
+            <button
+                onclick="nextMemory()">
+
+                ›
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     TOAST
+     ======================================================= -->
+
+<div id="toast">
+    MADE WITH LOVE.
+</div>
+
+
+<!-- =======================================================
+     OPTIONAL MUSIC
+     Place love-song.mp3 beside index.html
+     ======================================================= -->
+
+<audio
+    id="music"
+    src="love-song.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<script>
+
+/* =========================================================
+   MERCYVERSE // BRUTAL ENGINE
+   ========================================================= */
+
+
+/* =========================================================
+   SCENE REFERENCES
+   ========================================================= */
+
+const scenes = [
+    ...document.querySelectorAll(".scene")
+];
+
+const dots = [
+    ...document.querySelectorAll(".scene-dot")
+];
+
+
+let currentScene = 0;
+
+let soundEnabled = true;
+
+let musicPlaying = false;
+
+let giftOpened = false;
+
+let memoryIndex = 0;
+
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+const particleContainer =
+    document.getElementById("particles");
+
+
+function createParticles(){
+
+    const amount =
+        window.innerWidth < 600
+            ? 40
+            : 75;
+
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        const particle =
+            document.createElement("span");
+
+
+        particle.className =
+            "particle";
+
+
+        const size =
+            Math.random() * 5 + 2;
+
+
+        particle.style.width =
+            size + "px";
+
+
+        particle.style.height =
+            size + "px";
+
+
+        particle.style.left =
+            Math.random() * 100 + "%";
+
+
+        particle.style.animationDuration =
+            (
+                Math.random() * 14 + 8
+            ) + "s";
+
+
+        particle.style.animationDelay =
+            (
+                Math.random() * 12
+            ) + "s";
+
+
+        particleContainer.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+createParticles();
+
+
+/* =========================================================
+   FLOATING SYMBOLS
+   ========================================================= */
+
+const loveSymbols = [
+    "♥",
+    "♡",
+    "❤",
+    "👻",
+    "✦",
+    "✚",
+    "★"
+];
+
+
+function createFloatingLove(){
+
+    const item =
+        document.createElement("div");
+
+
+    item.className =
+        "floating-love";
+
+
+    item.textContent =
+        loveSymbols[
+            Math.floor(
+                Math.random() *
+                loveSymbols.length
+            )
+        ];
+
+
+    item.style.position =
+        "absolute";
+
+
+    item.style.left =
+        Math.random() * 100 + "%";
+
+
+    item.style.bottom =
+        "-40px";
+
+
+    item.style.color =
+        Math.random() > .5
+            ? "#ff3b9d"
+            : "#d9ff32";
+
+
+    item.style.fontSize =
+        (
+            Math.random() * 20 + 10
+        ) + "px";
+
+
+    item.style.animation =
+        "floatBrutal "
+        +
+        (
+            Math.random() * 6 + 7
+        )
+        +
+        "s linear forwards";
+
+
+    const style =
+        document.createElement("style");
+
+
+    style.textContent = `
+
+        @keyframes floatBrutal{
+
+            0%{
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity:0;
+            }
+
+            15%{
+                opacity:1;
+            }
+
+            100%{
+                transform:
+                    translateY(-115vh)
+                    rotate(180deg);
+
+                opacity:0;
+            }
+
+        }
+
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+
+    document
+        .getElementById("universe")
+        .appendChild(item);
+
+
+    setTimeout(
+        () => item.remove(),
+        15000
+    );
+
+}
+
+
+setInterval(
+    createFloatingLove,
+    1200
+);
+
+
+/* =========================================================
+   SCENE ENGINE
+   ========================================================= */
+
+function goToScene(index){
+
+    if(index < 0)
+        index = 0;
+
+
+    if(index >= scenes.length)
+        index =
+            scenes.length - 1;
+
+
+    scenes.forEach(
+        scene =>
+            scene.classList.remove(
+                "active"
+            )
+    );
+
+
+    dots.forEach(
+        dot =>
+            dot.classList.remove(
+                "active"
+            )
+    );
+
+
+    scenes[index]
+        .classList
+        .add("active");
+
+
+    dots[index]
+        .classList
+        .add("active");
+
+
+    currentScene =
+        index;
+
+
+    createHeartBurst(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        4
+    );
+
+}
+
+
+/* =========================================================
+   NEXT / PREVIOUS
+   ========================================================= */
+
+function nextScene(){
+
+    if(
+        currentScene <
+        scenes.length - 1
+    ){
+
+        goToScene(
+            currentScene + 1
+        );
+
+        playClickSound();
+
+    }
+
+}
+
+
+function previousScene(){
+
+    if(currentScene > 0){
+
+        goToScene(
+            currentScene - 1
+        );
+
+        playClickSound();
+
+    }
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "ArrowRight"
+        ){
+
+            nextScene();
+
+        }
+
+
+        if(
+            event.key === "ArrowLeft"
+        ){
+
+            previousScene();
+
+        }
+
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeMemory();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOUCH SWIPE
+   ========================================================= */
+
+let touchStartX = 0;
+
+let touchEndX = 0;
+
+
+document.addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.changedTouches[0]
+                .screenX;
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+document.addEventListener(
+    "touchend",
+    event => {
+
+        touchEndX =
+            event.changedTouches[0]
+                .screenX;
+
+        handleSwipe();
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+function handleSwipe(){
+
+    const distance =
+        touchEndX -
+        touchStartX;
+
+
+    if(
+        Math.abs(distance) < 70
+    )
+        return;
+
+
+    if(distance < 0)
+        nextScene();
+
+    else
+        previousScene();
+
+}
+
+
+/* =========================================================
+   SPLASH LOADER
+   ========================================================= */
+
+const loaderBar =
+    document.getElementById(
+        "loaderBar"
+    );
+
+
+const loaderPercent =
+    document.getElementById(
+        "loaderPercent"
+    );
+
+
+const splash =
+    document.getElementById(
+        "splash"
+    );
+
+
+let progress = 0;
+
+
+const loadingInterval =
+    setInterval(
+        () => {
+
+            progress +=
+                Math.random() * 4 + 1;
+
+
+            if(progress >= 100){
+
+                progress = 100;
+
+
+                clearInterval(
+                    loadingInterval
+                );
+
+
+                loaderBar.style.width =
+                    "100%";
+
+
+                loaderPercent.textContent =
+                    "100%";
+
+
+                setTimeout(
+                    () => {
+
+                        splash.classList.add(
+                            "hide"
+                        );
+
+
+                        showToast(
+                            "WELCOME TO THE MERCYVERSE."
+                        );
+
+                    },
+                    900
+                );
+
+            }
+
+
+            loaderBar.style.width =
+                progress + "%";
+
+
+            loaderPercent.textContent =
+                Math.floor(progress) + "%";
+
+
+        },
+        100
+    );
+
+
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
+const music =
+    document.getElementById(
+        "music"
+    );
+
+
+const musicBtn =
+    document.getElementById(
+        "musicBtn"
+    );
+
+
+musicBtn.addEventListener(
+    "click",
+    async () => {
+
+        if(!musicPlaying){
+
+            try{
+
+                await music.play();
+
+
+                musicPlaying =
+                    true;
+
+
+                musicBtn.textContent =
+                    "❚❚";
+
+
+                showToast(
+                    "MUSIC: ON"
+                );
+
+            }
+
+            catch(error){
+
+                showToast(
+                    "ADD love-song.mp3 BESIDE index.html"
+                );
+
+            }
+
+        }
+
+        else{
+
+            music.pause();
+
+
+            musicPlaying =
+                false;
+
+
+            musicBtn.textContent =
+                "♫";
+
+
+            showToast(
+                "MUSIC: PAUSED"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SOUND ENGINE
+   ========================================================= */
+
+let audioContext = null;
+
+
+function getAudioContext(){
+
+    if(!audioContext){
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    return audioContext;
+
+}
+
+
+function playClickSound(){
+
+    if(!soundEnabled)
+        return;
+
+
+    try{
+
+        const ctx =
+            getAudioContext();
+
+
+        if(
+            ctx.state ===
+            "suspended"
+        ){
+
+            ctx.resume();
+
+        }
+
+
+        const oscillator =
+            ctx.createOscillator();
+
+
+        const gain =
+            ctx.createGain();
+
+
+        oscillator.type =
+            "square";
+
+
+        oscillator.frequency.value =
+            480;
+
+
+        gain.gain.setValueAtTime(
+            .0001,
+            ctx.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .035,
+            ctx.currentTime + .01
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            ctx.currentTime + .09
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            ctx.destination
+        );
+
+
+        oscillator.start();
+
+
+        oscillator.stop(
+            ctx.currentTime + .1
+        );
+
+    }
+
+    catch(error){}
+
+}
+
+
+const soundBtn =
+    document.getElementById(
+        "soundBtn"
+    );
+
+
+soundBtn.addEventListener(
+    "click",
+    () => {
+
+        soundEnabled =
+            !soundEnabled;
+
+
+        soundBtn.textContent =
+            soundEnabled
+                ? "●"
+                : "○";
+
+
+        showToast(
+            soundEnabled
+                ? "SOUND: ON"
+                : "SOUND: OFF"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BURST EFFECT
+   ========================================================= */
+
+function createHeartBurst(
+    x,
+    y,
+    count = 8
+){
+
+    for(
+        let i = 0;
+        i < count;
+        i++
+    ){
+
+        const heart =
+            document.createElement(
+                "div"
+            );
+
+
+        heart.className =
+            "burst";
+
+
+        heart.textContent =
+            loveSymbols[
+                Math.floor(
+                    Math.random() *
+                    loveSymbols.length
+                )
+            ];
+
+
+        heart.style.left =
+            x + "px";
+
+
+        heart.style.top =
+            y + "px";
+
+
+        heart.style.setProperty(
+            "--x",
+            (
+                (Math.random() - .5)
+                * 220
+            ) + "px"
+        );
+
+
+        heart.style.setProperty(
+            "--y",
+            (
+                (Math.random() - .5)
+                * 220
+            ) + "px"
+        );
+
+
+        heart.style.setProperty(
+            "--r",
+            (
+                (Math.random() - .5)
+                * 120
+            ) + "deg"
+        );
+
+
+        document.body.appendChild(
+            heart
+        );
+
+
+        setTimeout(
+            () => heart.remove(),
+            1000
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GLOBAL INTERACTION
+   ========================================================= */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target.closest(
+                "button"
+            )
+            ||
+            event.target.closest(
+                ".memory-card"
+            )
+            ||
+            event.target.closest(
+                ".gift"
+            )
+        ){
+
+            createHeartBurst(
+                event.clientX,
+                event.clientY,
+                4
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MEMORY GALLERY
+   ========================================================= */
+
+const memories = [
+
+    "f0.jpg",
+    "f1.jpg",
+    "f2.jpg",
+    "f3.jpg",
+    "f5.jpg",
+    "f7.jpg",
+    "f10.jpg",
+    "f15.jpg"
+
+];
+
+
+const viewer =
+    document.getElementById(
+        "memoryViewer"
+    );
+
+
+const viewerImage =
+    document.getElementById(
+        "viewerImage"
+    );
+
+
+function openMemory(index){
+
+    memoryIndex =
+        index;
+
+
+    viewerImage.src =
+        memories[index];
+
+
+    viewerImage.onerror =
+        () => {
+
+            showToast(
+                "MEMORY IMAGE NOT FOUND."
+            );
+
+        };
+
+
+    viewer.classList.add(
+        "open"
+    );
+
+}
+
+
+function closeMemory(){
+
+    viewer.classList.remove(
+        "open"
+    );
+
+}
+
+
+function nextMemory(){
+
+    memoryIndex =
+        (
+            memoryIndex + 1
+        )
+        %
+        memories.length;
+
+
+    viewerImage.src =
+        memories[memoryIndex];
+
+}
+
+
+function previousMemory(){
+
+    memoryIndex =
+        (
+            memoryIndex -
+            1 +
+            memories.length
+        )
+        %
+        memories.length;
+
+
+    viewerImage.src =
+        memories[memoryIndex];
+
+}
+
+
+/* =========================================================
+   GIFT
+   ========================================================= */
+
+function openGift(){
+
+    if(giftOpened)
+        return;
+
+
+    giftOpened =
+        true;
+
+
+    const gift =
+        document.getElementById(
+            "gift"
+        );
+
+
+    const message =
+        document.getElementById(
+            "surpriseMessage"
+        );
+
+
+    const hint =
+        document.getElementById(
+            "giftHint"
+        );
+
+
+    gift.classList.add(
+        "open"
+    );
+
+
+    playClickSound();
+
+
+    createHeartBurst(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        30
+    );
+
+
+    setTimeout(
+        () => {
+
+            message.classList.add(
+                "show"
+            );
+
+
+            hint.style.display =
+                "none";
+
+
+            showToast(
+                "SURPRISE UNLOCKED."
+            );
+
+        },
+        650
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+
+/* =========================================================
+   REPLAY
+   ========================================================= */
+
+function replayExperience(){
+
+    currentScene =
+        0;
+
+
+    giftOpened =
+        false;
+
+
+    const gift =
+        document.getElementById(
+            "gift"
+        );
+
+
+    const message =
+        document.getElementById(
+            "surpriseMessage"
+        );
+
+
+    const hint =
+        document.getElementById(
+            "giftHint"
+        );
+
+
+    gift.classList.remove(
+        "open"
+    );
+
+
+    message.classList.remove(
+        "show"
+    );
+
+
+    hint.style.display =
+        "block";
+
+
+    goToScene(0);
+
+
+    createHeartBurst(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        15
+    );
+
+
+    showToast(
+        "RESTARTING MERCYVERSE."
+    );
+
+}
+
+
+/* =========================================================
+   VIEWER BACKDROP
+   ========================================================= */
+
+viewer.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target === viewer
+        ){
+
+            closeMemory();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MEMORY VIEWER KEYBOARD
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            !viewer.classList.contains(
+                "open"
+            )
+        )
+            return;
+
+
+        if(
+            event.key === "ArrowRight"
+        ){
+
+            nextMemory();
+
+        }
+
+
+        if(
+            event.key === "ArrowLeft"
+        ){
+
+            previousMemory();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+goToScene(0);
+
+
+/* =========================================================
+   CONSOLE SIGNATURE
+   ========================================================= */
+
+console.log(`
+
+╔══════════════════════════════════════════════╗
+║                                              ║
+║          MERCYVERSE // BRUTAL EDITION        ║
+║                                              ║
+║             LOVE FILE // 001                 ║
+║                                              ║
+║       BUILT WITH LOVE BY DEV BRIAN           ║
+║                                              ║
+║              FOR MERCY MERAB                 ║
+║                                              ║
+║    "LOVE DOESN'T NEED TO BE QUIET."          ║
+║                                              ║
+╚══════════════════════════════════════════════╝
+
+`);
+
+</script>
+
+</body>
+</html>
